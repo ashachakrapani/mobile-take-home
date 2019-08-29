@@ -22,6 +22,7 @@ class CharacterListViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.setNavigationButtonTitle()
         if ( segue.identifier == "CharacterDetailSegue") {
             if let characterDetailViewController = segue.destination as? CharacterDetailViewController {
                 characterDetailViewController.selectedCharacter = self.selectedCharacter
@@ -56,6 +57,14 @@ class CharacterListViewController: UIViewController {
     private func setUpNavigationBar() {
         let episode = self.selectedEpisode?.episode ??  ""
         self.navigationItem.title = NSLocalizedString("\(episode) - Characters", comment: "Title for character list table")
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = NSLocalizedString("Back", comment: "Back button title")
+        self.navigationItem.backBarButtonItem = backItem
+    }
+    
+    private func setNavigationButtonTitle() {
+
     }
     
     private func fetchDetail(forCharacterIds ids: [Int]) {

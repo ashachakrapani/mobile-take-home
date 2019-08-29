@@ -32,6 +32,10 @@ class CharacterDetailViewController: UIViewController {
     var selectedCharacter: CharacterViewModel?
     
     //MARK: - Private api
+    
+    private func setUpNavigationBar() {
+        self.navigationItem.backBarButtonItem?.title = NSLocalizedString("Back", comment: "Title for character list table")
+    }
     private lazy var seriesController: SeriesController = SeriesController()
     
     private func updateViewFromViewModel() {
