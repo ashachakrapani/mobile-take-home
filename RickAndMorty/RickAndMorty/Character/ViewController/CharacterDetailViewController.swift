@@ -39,7 +39,7 @@ class CharacterDetailViewController: UIViewController {
     private lazy var seriesController: SeriesController = SeriesController()
     
     private func updateViewFromViewModel() {
-        //TODO: fetch image
+        //fetch image
         if let imageUrl = self.selectedCharacter?.image {
             DispatchQueue.global().async {
                 self.seriesController.fetchImage(withUrl: imageUrl) { [weak self] (uiImage, error, statusCode) in
