@@ -9,7 +9,7 @@
 import UIKit
 
 class CharacterListViewController: UIViewController {
-
+    
     //MARK : - UIViewController overrides
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,11 +18,10 @@ class CharacterListViewController: UIViewController {
         self.tableView.rowHeight = UITableView.automaticDimension
         
         self.setUpNavigationBar()
-    
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        self.setNavigationButtonTitle()
         if ( segue.identifier == "CharacterDetailSegue") {
             if let characterDetailViewController = segue.destination as? CharacterDetailViewController {
                 characterDetailViewController.selectedCharacter = self.selectedCharacter
@@ -63,9 +62,6 @@ class CharacterListViewController: UIViewController {
         self.navigationItem.backBarButtonItem = backItem
     }
     
-    private func setNavigationButtonTitle() {
-
-    }
     
     private func fetchDetail(forCharacterIds ids: [Int]) {
         self.seriesController.fetchCharacterDetail(forIds: ids) { (characterListResponse) in
@@ -102,6 +98,7 @@ extension CharacterListViewController: UITableViewDataSource, UITableViewDelegat
             cell.createdDate.text = self.cellDateFormatter.string(from: _createdDate)
         }
         
+        //TODO: There is an issue with some of the images in the list not loading, I am yet to spend time on it.
         if let imageUrl = character?.image {
             DispatchQueue.global().async {
                 self.seriesController.fetchImage(withUrl: imageUrl) { (uiImage, error, statusCode) in
@@ -120,4 +117,28 @@ extension CharacterListViewController: UITableViewDataSource, UITableViewDelegat
             self.performSegue(withIdentifier: "CharacterDetailSegue", sender: self)
         }
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        self.selectedCharacter = self.characterListViewModel?.characters?[indexPath.row]
+        
+        //this delete action is superficial, as it is only removed in the view model. Navigating back and into this screen again, will fetch the item from the server. 
+        
+        let deleteAction: UIContextualAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
+            if let indexOfDeletedItem = self?.characterListViewModel?.characters?.firstIndex(where: { self?.selectedCharacter?.id == $0.id }) {
+                self?.characterListViewModel?.characters?.remove(at: indexOfDeletedItem)
+                self?.tableView.reloadData()
+            }
+            completionHandler(true)
+        }
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+    
 }

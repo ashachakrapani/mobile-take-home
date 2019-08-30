@@ -33,7 +33,6 @@ class EpisodesViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
-    //MARK: - IBActions
     
     //MARK: - Private api
     private var episodeListViewModel: EpisodeListViewModel?
@@ -42,6 +41,9 @@ class EpisodesViewController: UIViewController {
     
     private func setUpNavigationBar() {
         self.navigationItem.title = NSLocalizedString("Episodes", comment: "Title for episodes table")
+        let backItem = UIBarButtonItem()
+        backItem.title = NSLocalizedString("Back", comment: "Back button title")
+        self.navigationItem.backBarButtonItem = backItem
     }
     
     private func fetchEpisodes() {
