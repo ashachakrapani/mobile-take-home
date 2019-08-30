@@ -8,10 +8,7 @@
 
 import Foundation
 
-public enum CharacterStatus: String, Codable, Comparable {
-    public static func < (lhs: CharacterStatus, rhs: CharacterStatus) -> Bool {
-        return lhs.rawValue < rhs.rawValue
-    }
+public enum CharacterStatus: String, Codable {
     
     case unknown = "Unknown"
     case alive = "Alive"
