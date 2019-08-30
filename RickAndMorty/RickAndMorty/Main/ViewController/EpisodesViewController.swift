@@ -70,6 +70,7 @@ extension EpisodesViewController: UITableViewDataSource, UITableViewDelegate {
         let episodeViewModel = self.episodeListViewModel?.episodes?[indexPath.row]
         cell.episodeNumberLabel.text = episodeViewModel?.episode
         cell.episodeNameLabel.text = episodeViewModel?.title
+        cell.isUserInteractionEnabled = false
         return cell
     }
     

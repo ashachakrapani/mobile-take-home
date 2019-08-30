@@ -9,7 +9,7 @@
 import XCTest
 @testable import RickAndMorty
 
-class RickAndMortyTests: XCTestCase {
+class SeriesControllerTests: XCTestCase {
     
     private lazy var seriesController = SeriesController()
     
@@ -44,8 +44,5 @@ class RickAndMortyTests: XCTestCase {
             XCTAssert(response as AnyObject is UIImage)
         }
     }
-    
-    //TODO: - Tests for table view/cells
-    
     
 }
